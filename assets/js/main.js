@@ -1,5 +1,35 @@
 const yearEl = document.getElementById("year");
 yearEl.textContent = new Date().getFullYear();
+// Header shadow on scroll
+const header = document.querySelector(".site-header");
+
+window.addEventListener("scroll", () => {
+  if (!header) return;
+  header.classList.toggle("scrolled", window.scrollY > 10);
+});
+
+// ===== Scroll progress bar (auto-insert) =====
+(function addProgressBar(){
+  const wrap = document.createElement("div");
+  wrap.className = "progress-wrap";
+  wrap.innerHTML = `<div class="progress-bar" id="scrollProgress"></div>`;
+  document.body.prepend(wrap);
+})();
+
+const scrollProgress = () => {
+  const el = document.getElementById("scrollProgress");
+  if (!el) return;
+
+  const doc = document.documentElement;
+  const scrollTop = doc.scrollTop || document.body.scrollTop;
+  const scrollHeight = doc.scrollHeight - doc.clientHeight;
+  const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+
+  el.style.width = `${pct}%`;
+};
+
+window.addEventListener("scroll", scrollProgress, { passive: true });
+window.addEventListener("load", scrollProgress);
 
 // Mobile nav toggle
 const navToggle = document.getElementById("navToggle");
@@ -32,6 +62,14 @@ function safeText(s) {
 function createProjectCard(p) {
   const card = document.createElement("article");
   card.className = "card project-card";
+  // Make whole card clickable
+  card.style.cursor = "pointer";
+  card.addEventListener("click", (ev) => {
+    // If user clicks a button link, don't open modal
+    const isLink = ev.target.closest("a");
+    if (isLink) return;
+    openModal(p);
+  });
 
   const media = document.createElement("div");
   media.className = "project-media";
@@ -115,7 +153,14 @@ function render(list) {
     projectsGrid.appendChild(empty);
     return;
   }
+  
   list.forEach(p => projectsGrid.appendChild(createProjectCard(p)));
+  // reveal newly rendered project cards
+document.querySelectorAll(".project-card").forEach(el => {
+  el.classList.add("reveal");
+  requestAnimationFrame(() => el.classList.add("show"));
+});
+
 }
 
 function applyFilters() {
@@ -165,3 +210,118 @@ async function init() {
 }
 
 init();
+// Scroll reveal (IntersectionObserver)
+function setupReveal() {
+  const targets = document.querySelectorAll(".section .card, .section-head, .hero-copy, .hero-card");
+  targets.forEach(el => el.classList.add("reveal"));
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add("show");
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  targets.forEach(el => obs.observe(el));
+}
+
+window.addEventListener("load", () => {
+  setupReveal();
+});
+// ===== Modal Logic =====
+const projectModal = document.getElementById("projectModal");
+const modalClose = document.getElementById("modalClose");
+const modalImg = document.getElementById("modalImg");
+const modalTitle = document.getElementById("modalTitle");
+const modalDesc = document.getElementById("modalDesc");
+const modalTags = document.getElementById("modalTags");
+const modalGithub = document.getElementById("modalGithub");
+const modalExcel = document.getElementById("modalExcel");
+const modalReport = document.getElementById("modalReport");
+
+function openModal(p){
+  if (!projectModal) return;
+
+  projectModal.classList.add("open");
+  projectModal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+
+  modalImg.src = p.image || "";
+  modalImg.alt = p.imageAlt || p.title || "Project preview";
+  modalTitle.textContent = p.title || "";
+  modalDesc.textContent = p.description || "";
+
+  // Tags
+  modalTags.innerHTML = "";
+  (p.tags || []).forEach(t => {
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = t;
+    modalTags.appendChild(tag);
+  });
+
+  // Links (hide if empty)
+  if (p.githubUrl) { modalGithub.href = p.githubUrl; modalGithub.style.display = "inline-flex"; }
+  else { modalGithub.style.display = "none"; }
+
+  if (p.excelUrl) { modalExcel.href = p.excelUrl; modalExcel.style.display = "inline-flex"; }
+  else { modalExcel.style.display = "none"; }
+
+  if (p.reportUrl) { modalReport.href = p.reportUrl; modalReport.style.display = "inline-flex"; }
+  else { modalReport.style.display = "none"; }
+}
+
+function closeModal(){
+  if (!projectModal) return;
+  projectModal.classList.remove("open");
+  projectModal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+modalClose?.addEventListener("click", closeModal);
+projectModal?.addEventListener("click", (e) => {
+  const target = e.target;
+  if (target?.dataset?.close === "true") closeModal();
+});
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeModal();
+});
+// ===== Active section highlight in navbar =====
+function setupActiveNav(){
+  const navLinks = Array.from(document.querySelectorAll('.nav-menu a[href^="#"]'));
+  const sections = navLinks
+    .map(a => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+
+  const setActive = (id) => {
+    navLinks.forEach(a => {
+      const href = a.getAttribute("href");
+      a.classList.toggle("active", href === `#${id}`);
+    });
+  };
+
+  const obs = new IntersectionObserver((entries) => {
+    // pick the most visible section
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (visible?.target?.id) setActive(visible.target.id);
+  }, {
+    root: null,
+    threshold: [0.2, 0.35, 0.5, 0.65],
+    rootMargin: "-20% 0px -60% 0px" // makes active switch feel natural
+  });
+
+  sections.forEach(sec => obs.observe(sec));
+
+  // set initial active link
+  const hash = location.hash?.replace("#","") || "home";
+  setActive(hash);
+}
+
+window.addEventListener("load", () => {
+  setupActiveNav();
+});

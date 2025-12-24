@@ -9,9 +9,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="progress-wrap" aria-hidden="true">
+  <div class="progress-bar" id="scrollProgress"></div>
+</div>
+
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="Go to top">
@@ -35,10 +40,37 @@
       </nav>
     </div>
   </header>
+<!-- Project Modal -->
+<div class="modal" id="projectModal" aria-hidden="true">
+  <div class="modal-backdrop" data-close="true"></div>
+
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+
+    <div class="modal-media">
+      <img id="modalImg" alt="Project preview" />
+    </div>
+
+    <div class="modal-body">
+      <h3 id="modalTitle" class="modal-title"></h3>
+      <p id="modalDesc" class="modal-desc"></p>
+
+      <div id="modalTags" class="tags" style="margin-top:10px;"></div>
+
+      <div class="btn-row" style="margin-top:14px;">
+        <a id="modalGithub" class="btn primary" target="_blank" rel="noreferrer">GitHub Repo</a>
+        <a id="modalExcel" class="btn" target="_blank" rel="noreferrer">Excel Dashboard</a>
+        <a id="modalReport" class="btn" target="_blank" rel="noreferrer">Report</a>
+      </div>
+    </div>
+  </div>
+</div>
 
   <main>
     <!-- HOME -->
-    <section class="section hero" id="home">
+    <section class="section hero hero-blob" id="home">
+  <div class="blob" aria-hidden="true"></div>
+
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="badge">Data Analyst</p>
@@ -188,45 +220,96 @@
     </section>
 
     <!-- CONTACT -->
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="section-head">
-          <h2>Contact</h2>
-          <p class="muted">Let’s connect</p>
+   <section class="section" id="contact">
+  <div class="container">
+    <div class="section-head">
+      <h2>Contact</h2>
+      <p class="muted">Reach out for analytics work, dashboards, reporting, or data cleaning.</p>
+    </div>
+
+    <div class="contact-pro">
+      <div class="card contact-card">
+        <h3>Contact Details</h3>
+
+        <div class="contact-box">
+          <div class="contact-icon email"><i class="fa-solid fa-envelope"></i></div>
+          <div class="contact-info">
+            <div class="contact-label">Email</div>
+            <a class="contact-value" href="mailto:ijazsoftengnr@gmail.com">ijazsoftengnr@gmail.com</a>
+          </div>
+          <a class="contact-action" href="mailto:ijazsoftengnr@gmail.com" aria-label="Email Engnr Ijaz Ahmad">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
         </div>
 
-        <div class="contact-grid">
-          <div class="card">
-            <h3>Reach me</h3>
-            <div class="contact-item">
-              <span class="label">Email</span>
-              <a href="mailto:ijazsoftengnr@gmail.com">ijazsoftengnr@gmail.com</a>
-            </div>
-            <div class="contact-item">
-              <span class="label">WhatsApp</span>
-              <a href="https://wa.me/923409392472" target="_blank" rel="noreferrer">+92 340 9392472</a>
-            </div>
-            <div class="contact-item">
-              <span class="label">LinkedIn</span>
-              <a href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noreferrer">
-                ijaz-ahmad-18516a178
-              </a>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Quick note</h3>
-            <p class="muted">
-              If you’re messaging about a project, include the role/title and what you want to achieve
-              (dashboard, data cleaning, KPI reporting, automation).
-            </p>
-            <a class="btn primary" href="mailto:ijazsoftengnr@gmail.com?subject=Portfolio%20Inquiry%20-%20Ijaz%20Ahmad">
-              Email Me
+        <div class="contact-box">
+          <div class="contact-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></div>
+          <div class="contact-info">
+            <div class="contact-label">WhatsApp</div>
+            <a class="contact-value" href="https://wa.me/923409392472" target="_blank" rel="noreferrer">
+              +92 340 9392472
             </a>
           </div>
+          <a class="contact-action" href="https://wa.me/923409392472" target="_blank" rel="noreferrer" aria-label="WhatsApp Engnr Ijaz Ahmad">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <div class="contact-box">
+          <div class="contact-icon linkedin"><i class="fa-brands fa-linkedin-in"></i></div>
+          <div class="contact-info">
+            <div class="contact-label">LinkedIn</div>
+            <a class="contact-value" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noreferrer">
+              ijaz-ahmad-18516a178
+            </a>
+          </div>
+          <a class="contact-action" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <div class="contact-cta">
+          <a class="btn primary" href="mailto:ijazsoftengnr@gmail.com?subject=Portfolio%20Inquiry%20-%20Ijaz%20Ahmad">
+            <i class="fa-solid fa-paper-plane"></i>
+            Email Me
+          </a>
+          <a class="btn" href="#projects">
+            <i class="fa-solid fa-briefcase"></i>
+            View Projects
+          </a>
         </div>
       </div>
-    </section>
+
+      <div class="card contact-card">
+        <h3>Availability</h3>
+        <p class="muted" style="line-height:1.7;">
+          I can help with <strong>SQL reporting</strong>, <strong>Python analysis</strong>, and
+          <strong>Excel dashboards</strong>. If you share your dataset and goals, I can suggest the best approach.
+        </p>
+
+        <div class="mini-meta" style="margin-top:14px;">
+          <div class="mini">
+            <span class="mini-label">Role</span>
+            <span class="mini-value">Data Analyst</span>
+          </div>
+          <div class="mini">
+            <span class="mini-label">Tools</span>
+            <span class="mini-value">SQL • Python • Excel</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <h3 style="margin:0 0 8px;">Quick Message Template</h3>
+          <p class="muted" style="margin:0; line-height:1.7;">
+            “Hi Ijaz, we need a dashboard/report for <strong>___</strong>. Dataset is <strong>___</strong>.
+            Deadline is <strong>___</strong>. Can you help?”
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
   </main>
 
   <footer class="site-footer">
@@ -237,5 +320,16 @@
   </footer>
 
   <script src="assets/js/main.js" defer></script>
+  <a
+  class="wa-float"
+  href="https://wa.me/923409392472"
+  target="_blank"
+  rel="noreferrer"
+  aria-label="Chat on WhatsApp"
+  title="Chat on WhatsApp"
+>
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
 </body>
 </html>
