@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Olist E-Commerce Analytics (SQL + Python + Excel)",
+    "category": "analytics",
+    "description": "End-to-end e-commerce analytics using the Olist dataset: SQLite database, SQL reporting views, Python KPI exports (RFM + cohorts), and an Excel dashboard for stakeholders.",
+    "tags": ["SQL", "Python", "Excel", "SQLite", "KPI", "RFM", "Cohorts"],
+    "image": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/assets/images/dashboard_full.png",
+    "imageAlt": "Olist E-Commerce Analytics Dashboard (Excel)",
+    "githubUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics",
+    "excelUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/olist_ecommerce_dashboard.xlsx",
+    "reportUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/tree/main/reports"
+  },
+
+  {
+    "title": "Olist Dashboard — KPI Cards (Preview)",
+    "category": "analytics",
+    "description": "Top-level KPI cards preview from the Excel dashboard.",
+    "tags": ["Excel", "KPIs"],
+    "image": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/assets/images/kpi_cards.png",
+    "imageAlt": "KPI cards preview",
+    "githubUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics",
+    "excelUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/olist_ecommerce_dashboard.xlsx"
+  },
+
+  {
+    "title": "Olist Dashboard — Delivery SLA by State (Preview)",
+    "category": "analytics",
+    "description": "Delivery SLA visualization preview from the Excel dashboard.",
+    "tags": ["Excel", "Logistics"],
+    "image": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/assets/images/delivery_sla_by_state.png",
+    "imageAlt": "Delivery SLA by state chart",
+    "githubUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics",
+    "excelUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/olist_ecommerce_dashboard.xlsx"
+  },
+
+  {
+    "title": "Olist Dashboard — Payment Mix (Preview)",
+    "category": "analytics",
+    "description": "Payment method mix preview from the Excel dashboard.",
+    "tags": ["Excel", "Payments"],
+    "image": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/assets/images/payment_mix.png",
+    "imageAlt": "Payment mix chart",
+    "githubUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics",
+    "excelUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/olist_ecommerce_dashboard.xlsx"
+  }
+]
