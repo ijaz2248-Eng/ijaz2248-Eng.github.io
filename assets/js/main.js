@@ -292,57 +292,72 @@ window.addEventListener("keydown", (e) => {
 // ===== Active section highlight (scroll position based) =====
 function setupActiveNav(){
   const header = document.querySelector(".site-header");
-  const headerH = () => (header ? header.offsetHeight : 0);
-
   const links = Array.from(document.querySelectorAll('.nav-menu a[href^="#"]'));
-  const sections = links
-    .map(a => document.querySelector(a.getAttribute("href")))
-    .filter(Boolean);
+
+  function getSections(){
+    return links
+      .map(a => document.querySelector(a.getAttribute("href")))
+      .filter(Boolean);
+  }
 
   function setActive(id){
     links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${id}`));
   }
 
-  function onScroll(){
-    const offset = headerH() + 16;
-    const scrollPos = window.scrollY + offset;
-const nearBottom =
-    window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-
-  if (nearBottom && sections.length){
-    setActive(sections[sections.length - 1].id);
-    return;
+  function headerOffset(){
+    return (header ? header.offsetHeight : 0) + 18;
   }
-    let currentId = sections[0]?.id || "home";
-    for (const sec of sections){
-      if (sec.offsetTop <= scrollPos) currentId = sec.id;
+
+  function onScroll(){
+    const sections = getSections();
+    if (!sections.length) return;
+
+    // If near bottom → last section active (Contact)
+    const nearBottom =
+      window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 6;
+    if (nearBottom){
+      setActive(sections[sections.length - 1].id);
+      return;
     }
 
-    setActive(currentId);
+    const markerY = headerOffset();
+    let current = sections[0];
+
+    for (const sec of sections){
+      const r = sec.getBoundingClientRect();
+      // Section is considered active if marker line is inside its vertical range
+      if (r.top <= markerY && r.bottom > markerY){
+        current = sec;
+        break;
+      }
+      // Fallback: if we passed it, keep last seen
+      if (r.top <= markerY) current = sec;
+    }
+
+    setActive(current.id);
   }
 
-  // Update on scroll + on load + when resizing
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
-  window.addEventListener("load", () => {
-    // If URL has a hash, honor it first
-    const hash = location.hash?.replace("#", "");
-    if (hash) setActive(hash);
-    onScroll();
-  });
+  window.addEventListener("load", onScroll);
 
-  // Also update when clicking links (instant highlight)
+  // Instant highlight on click
   links.forEach(a => {
     a.addEventListener("click", () => {
       const id = a.getAttribute("href").replace("#", "");
       setActive(id);
     });
   });
+
+  // initial state
+  onScroll();
 }
 
 setupActiveNav();
-
-
-window.addEventListener("load", () => {
-  setupActiveNav();
+// Back to top fallback (works even if anchor is blocked)
+document.querySelectorAll('a[href="#top"]').forEach(a => {
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 });
