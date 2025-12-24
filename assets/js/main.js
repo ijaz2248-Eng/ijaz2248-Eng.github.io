@@ -71,14 +71,24 @@ function createProjectCard(p) {
     openModal(p);
   });
 
-  const media = document.createElement("div");
-  media.className = "project-media";
+ const media = document.createElement("div");
+media.className = "project-media";
+media.style.position = "relative";
+
 
   const img = document.createElement("img");
   img.loading = "lazy";
   img.alt = safeText(p.imageAlt || p.title || "Project screenshot");
   img.src = p.image || "";
   media.appendChild(img);
+ 
+  if (p.featured) {
+  const ribbon = document.createElement("div");
+  ribbon.className = "ribbon";
+  ribbon.innerHTML = `<span>⭐ Featured</span>`;
+  media.appendChild(ribbon);
+  card.classList.add("featured");
+}
 
   const body = document.createElement("div");
   body.className = "project-body";
@@ -90,6 +100,14 @@ function createProjectCard(p) {
   const desc = document.createElement("p");
   desc.className = "project-desc";
   desc.textContent = safeText(p.description);
+    const metrics = document.createElement("div");
+metrics.className = "metrics";
+(p.metrics || []).slice(0, 4).forEach(m => {
+  const b = document.createElement("span");
+  b.className = "metric";
+  b.textContent = safeText(m);
+  metrics.appendChild(b);
+});
 
   const tags = document.createElement("div");
   tags.className = "tags";
@@ -133,10 +151,12 @@ function createProjectCard(p) {
     btnRow.appendChild(a);
   }
 
-  body.appendChild(title);
-  body.appendChild(desc);
-  if ((p.tags || []).length) body.appendChild(tags);
-  body.appendChild(btnRow);
+body.appendChild(title);
+body.appendChild(desc);
+if ((p.metrics || []).length) body.appendChild(metrics);
+if ((p.tags || []).length) body.appendChild(tags);
+body.appendChild(btnRow);
+
 
   card.appendChild(media);
   card.appendChild(body);
@@ -184,6 +204,8 @@ async function init() {
   try {
     const res = await fetch("data/projects.json", { cache: "no-store" });
     projects = await res.json();
+    projects.sort((a,b) => (b.featured === true) - (a.featured === true));
+
 
     // Fill filter dropdown (categories)
     const categories = uniq(

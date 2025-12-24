@@ -1,15 +1,18 @@
 [
-  {
-    "title": "Olist E-Commerce Analytics (SQL + Python + Excel)",
-    "category": "analytics",
-    "description": "End-to-end e-commerce analytics using the Olist dataset: SQLite database, SQL reporting views, Python KPI exports (RFM + cohorts), and an Excel dashboard for stakeholders.",
-    "tags": ["SQL", "Python", "Excel", "SQLite", "KPI", "RFM", "Cohorts"],
-    "image": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/assets/images/dashboard_full.png",
-    "imageAlt": "Olist E-Commerce Analytics Dashboard (Excel)",
-    "githubUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics",
-    "excelUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/olist_ecommerce_dashboard.xlsx",
-    "reportUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/tree/main/reports"
-  },
+{
+  "title": "Olist E-Commerce Analytics (SQL + Python + Excel)",
+  "category": "analytics",
+  "featured": true,
+  "metrics": ["100k+ Orders", "Brazil E-Commerce", "RFM + Cohorts", "Excel Dashboard"],
+  "description": "End-to-end e-commerce analytics using the Olist dataset: SQLite database, SQL reporting views, Python KPI exports (RFM + cohorts), and an Excel dashboard for stakeholders.",
+  "tags": ["SQL", "Python", "Excel", "SQLite", "KPI", "RFM", "Cohorts"],
+  "image": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/assets/images/dashboard_full.png",
+  "imageAlt": "Olist E-Commerce Analytics Dashboard (Excel)",
+  "githubUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics",
+  "excelUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/raw/main/olist_ecommerce_dashboard.xlsx",
+  "reportUrl": "https://github.com/ijaz2248-Eng/olist-ecommerce-analytics/tree/main/reports"
+}
+,
 
   {
     "title": "Olist Dashboard — KPI Cards (Preview)",
