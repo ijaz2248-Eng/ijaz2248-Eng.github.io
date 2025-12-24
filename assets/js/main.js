@@ -289,38 +289,59 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
 // ===== Active section highlight in navbar =====
+// ===== Active section highlight (scroll position based) =====
 function setupActiveNav(){
-  const navLinks = Array.from(document.querySelectorAll('.nav-menu a[href^="#"]'));
-  const sections = navLinks
+  const header = document.querySelector(".site-header");
+  const headerH = () => (header ? header.offsetHeight : 0);
+
+  const links = Array.from(document.querySelectorAll('.nav-menu a[href^="#"]'));
+  const sections = links
     .map(a => document.querySelector(a.getAttribute("href")))
     .filter(Boolean);
 
-  const setActive = (id) => {
-    navLinks.forEach(a => {
-      const href = a.getAttribute("href");
-      a.classList.toggle("active", href === `#${id}`);
-    });
-  };
+  function setActive(id){
+    links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${id}`));
+  }
 
-  const obs = new IntersectionObserver((entries) => {
-    // pick the most visible section
-    const visible = entries
-      .filter(e => e.isIntersecting)
-      .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+  function onScroll(){
+    const offset = headerH() + 16;
+    const scrollPos = window.scrollY + offset;
+const nearBottom =
+    window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
 
-    if (visible?.target?.id) setActive(visible.target.id);
-  }, {
-    root: null,
-    threshold: [0.2, 0.35, 0.5, 0.65],
-    rootMargin: "-20% 0px -60% 0px" // makes active switch feel natural
+  if (nearBottom && sections.length){
+    setActive(sections[sections.length - 1].id);
+    return;
+  }
+    let currentId = sections[0]?.id || "home";
+    for (const sec of sections){
+      if (sec.offsetTop <= scrollPos) currentId = sec.id;
+    }
+
+    setActive(currentId);
+  }
+
+  // Update on scroll + on load + when resizing
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  window.addEventListener("load", () => {
+    // If URL has a hash, honor it first
+    const hash = location.hash?.replace("#", "");
+    if (hash) setActive(hash);
+    onScroll();
   });
 
-  sections.forEach(sec => obs.observe(sec));
-
-  // set initial active link
-  const hash = location.hash?.replace("#","") || "home";
-  setActive(hash);
+  // Also update when clicking links (instant highlight)
+  links.forEach(a => {
+    a.addEventListener("click", () => {
+      const id = a.getAttribute("href").replace("#", "");
+      setActive(id);
+    });
+  });
 }
+
+setupActiveNav();
+
 
 window.addEventListener("load", () => {
   setupActiveNav();
