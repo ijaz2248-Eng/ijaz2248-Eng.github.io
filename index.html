@@ -3,22 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Engnr Ijaz Ahmad — Data Analyst (SQL • Python • Excel). Portfolio and projects." />
+
   <title>Engnr Ijaz Ahmad — Data Analyst</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Data Analyst portfolio of Engnr Ijaz Ahmad. SQL reporting, Python analysis, Excel dashboards, and real-world analytics projects." />
+  <link rel="canonical" href="https://ijaz2248-eng.github.io/" />
+
+  <!-- Identity links -->
+  <link rel="me" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" />
+  <link rel="me" href="https://www.facebook.com/engr.ijaz.ahmad.50411/" />
+
+  <!-- Open Graph (LinkedIn, WhatsApp, Facebook) -->
+  <meta property="og:site_name" content="Engnr Ijaz Ahmad Portfolio" />
+  <meta property="og:title" content="Engnr Ijaz Ahmad — Data Analyst (SQL • Python • Excel)" />
+  <meta property="og:description" content="Portfolio of Engnr Ijaz Ahmad showcasing SQL, Python, and Excel analytics projects." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ijaz2248-eng.github.io/" />
+  <meta property="og:image" content="https://ijaz2248-eng.github.io/assets/og-cover.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Engnr Ijaz Ahmad — Data Analyst" />
+  <meta name="twitter:description" content="SQL • Python • Excel — Analytics projects, dashboards, and reporting." />
+  <meta name="twitter:image" content="https://ijaz2248-eng.github.io/assets/og-cover.png" />
+
+  <!-- Favicons (your logo) -->
+  <link rel="icon" type="image/png" href="assets/logo-tight.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" href="assets/logo-dark.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" href="assets/logo-rounded.png">
+  <link rel="apple-touch-icon" href="assets/logo-rounded.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/styles.css?v=4" />
-  </head>
+  <link rel="stylesheet" href="assets/css/styles.css?v=5" />
+</head>
 
 <body>
-    <div class="progress-wrap" aria-hidden="true">
-  <div class="progress-bar" id="scrollProgress"></div>
-</div>
-<div id="top"></div>
+  <div class="progress-wrap" aria-hidden="true">
+    <div class="progress-bar" id="scrollProgress"></div>
+  </div>
 
-  <header class="site-header" id="top">
+  <div id="top"></div>
+
+  <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="#top" aria-label="Go to top">
         <span class="brand-dot" aria-hidden="true"></span>
@@ -41,36 +72,37 @@
       </nav>
     </div>
   </header>
-<!-- Project Modal -->
-<div class="modal" id="projectModal" aria-hidden="true">
-  <div class="modal-backdrop" data-close="true"></div>
 
-  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+  <!-- Project Modal -->
+  <div class="modal" id="projectModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="true"></div>
 
-    <div class="modal-media">
-      <img id="modalImg" alt="Project preview" />
-    </div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
 
-    <div class="modal-body">
-      <h3 id="modalTitle" class="modal-title"></h3>
-      <p id="modalDesc" class="modal-desc"></p>
+      <div class="modal-media">
+        <img id="modalImg" alt="Project preview" />
+      </div>
 
-      <div id="modalTags" class="tags" style="margin-top:10px;"></div>
+      <div class="modal-body">
+        <h3 id="modalTitle" class="modal-title"></h3>
+        <p id="modalDesc" class="modal-desc"></p>
 
-      <div class="btn-row" style="margin-top:14px;">
-        <a id="modalGithub" class="btn primary" target="_blank" rel="noreferrer">GitHub Repo</a>
-        <a id="modalExcel" class="btn" target="_blank" rel="noreferrer">Excel Dashboard</a>
-        <a id="modalReport" class="btn" target="_blank" rel="noreferrer">Report</a>
+        <div id="modalTags" class="tags" style="margin-top:10px;"></div>
+
+        <div class="btn-row" style="margin-top:14px;">
+          <a id="modalGithub" class="btn primary" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+          <a id="modalExcel" class="btn" target="_blank" rel="noopener noreferrer">Excel Dashboard</a>
+          <a id="modalReport" class="btn" target="_blank" rel="noopener noreferrer">Report</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <main>
     <!-- HOME -->
     <section class="section hero hero-blob" id="home">
-  <div class="blob" aria-hidden="true"></div>
+      <div class="blob" aria-hidden="true"></div>
 
       <div class="container hero-grid">
         <div class="hero-copy">
@@ -84,16 +116,14 @@
             and dashboards that help stakeholders make decisions.
           </p>
 
-            <div class="hero-actions">
-    <a class="btn primary" href="#projects">View Projects</a>
-    <a class="btn" href="#contact">Contact</a>
-    <a class="btn" href="assets/Ijaz_Ahmad_Data_Analyst.pdf" download>
-  <i class="fa-solid fa-file-pdf"></i>
-  Download CV
-</a>
-
-    </div>
-
+          <div class="hero-actions">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" href="#contact">Contact</a>
+            <a class="btn" href="assets/Ijaz_Ahmad_Data_Analyst.pdf" download>
+              <i class="fa-solid fa-file-pdf"></i>
+              Download CV
+            </a>
+          </div>
 
           <div class="hero-links">
             <a class="link" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noopener noreferrer">
@@ -128,15 +158,12 @@
     </section>
 
     <!-- ABOUT -->
-    <section class="section"   id="about">
+    <section class="section" id="about">
       <div class="container">
         <div class="section-head">
           <h2>About</h2>
-          <p class="muted">
-            Practical, business-focused analytics with clean deliverables.
-          </p>
+          <p class="muted">Practical, business-focused analytics with clean deliverables.</p>
         </div>
-        <!--For Commit -->
 
         <div class="about-grid">
           <div class="card">
@@ -210,11 +237,7 @@
       <div class="container">
         <div class="section-head">
           <h2>Projects</h2>
-          <p class="muted">
-            <!-- Cards below are loaded from <code>data/projects.json</code>. Add new projects there. -->
-
-            <!-- Comm -->
-          </p>
+          <p class="muted"></p>
         </div>
 
         <div class="projects-toolbar">
@@ -229,103 +252,117 @@
     </section>
 
     <!-- CONTACT -->
-   <section class="section" id="contact">
-  <div class="container">
-    <div class="section-head">
-      <h2>Get in touch</h2>
-      <p class="muted">Reach out for analytics work, dashboards, reporting, or data cleaning.</p>
-    </div>
-
-    <div class="contact-pro">
-      <div class="card contact-card">
-        <h3>Contact Details</h3>
-
-        <div class="contact-box">
-          <div class="contact-icon email"><i class="fa-solid fa-envelope"></i></div>
-          <div class="contact-info">
-            <div class="contact-label">Email</div>
-            <a class="contact-value" href="mailto:ijazsoftengnr@gmail.com">ijazsoftengnr@gmail.com</a>
-          </div>
-          <a class="contact-action" href="mailto:ijazsoftengnr@gmail.com" aria-label="Email Engnr Ijaz Ahmad">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-head">
+          <h2>Get in touch</h2>
+          <p class="muted">Reach out for analytics work, dashboards, reporting, or data cleaning.</p>
         </div>
 
-        <div class="contact-box">
-          <div class="contact-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></div>
-          <div class="contact-info">
-            <div class="contact-label">WhatsApp</div>
-            <a class="contact-value" href="https://wa.me/923409392472" target="_blank" rel="noopener noreferrer">
-              +92 340 9392472
-            </a>
+        <div class="contact-pro">
+          <div class="card contact-card">
+            <h3>Contact Details</h3>
+
+            <div class="contact-box">
+              <div class="contact-icon email"><i class="fa-solid fa-envelope"></i></div>
+              <div class="contact-info">
+                <div class="contact-label">Email</div>
+                <a class="contact-value" href="mailto:ijazsoftengnr@gmail.com">ijazsoftengnr@gmail.com</a>
+              </div>
+              <a class="contact-action" href="mailto:ijazsoftengnr@gmail.com" aria-label="Email Engnr Ijaz Ahmad">
+                <span class="sr-only">Email</span>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+
+            <div class="contact-box">
+              <div class="contact-icon whatsapp"><i class="fa-brands fa-whatsapp"></i></div>
+              <div class="contact-info">
+                <div class="contact-label">WhatsApp</div>
+                <a class="contact-value" href="https://wa.me/923409392472" target="_blank" rel="noopener noreferrer">
+                  +92 340 9392472
+                </a>
+              </div>
+              <a class="contact-action" href="https://wa.me/923409392472" target="_blank" rel="noopener noreferrer" aria-label="Open WhatsApp chat">
+                <span class="sr-only">Open WhatsApp</span>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+
+            <div class="contact-box">
+              <div class="contact-icon linkedin"><i class="fa-brands fa-linkedin-in"></i></div>
+              <div class="contact-info">
+                <div class="contact-label">LinkedIn</div>
+                <a class="contact-value" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noopener noreferrer">
+                  ijaz-ahmad-18516a178
+                </a>
+              </div>
+              <a class="contact-action" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">
+                <span class="sr-only">Open LinkedIn</span>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+
+            <!-- Facebook -->
+            <div class="contact-box">
+              <div class="contact-icon facebook"><i class="fa-brands fa-facebook-f"></i></div>
+              <div class="contact-info">
+                <div class="contact-label">Facebook</div>
+                <a class="contact-value" href="https://www.facebook.com/engr.ijaz.ahmad.50411/" target="_blank" rel="noopener noreferrer">
+                  engr.ijaz.ahmad
+                </a>
+              </div>
+              <a class="contact-action" href="https://www.facebook.com/engr.ijaz.ahmad.50411/" target="_blank" rel="noopener noreferrer" aria-label="Open Facebook profile">
+                <span class="sr-only">Open Facebook</span>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              </a>
+            </div>
+
+            <div class="contact-cta">
+              <a class="btn primary" href="mailto:ijazsoftengnr@gmail.com?subject=Portfolio%20Inquiry%20-%20Ijaz%20Ahmad">
+                <i class="fa-solid fa-paper-plane"></i>
+                Email Me
+              </a>
+              <a class="btn" href="#projects">
+                <i class="fa-solid fa-briefcase"></i>
+                View Projects
+              </a>
+              <a class="btn" href="assets/Ijaz_Ahmad_Data_Analyst.pdf" download>
+                <i class="fa-solid fa-file-pdf"></i>
+                Download CV
+              </a>
+            </div>
           </div>
-         <a class="contact-action" href="https://wa.me/923409392472" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Engnr Ijaz Ahmad">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
-        </div>
 
-        <div class="contact-box">
-          <div class="contact-icon linkedin"><i class="fa-brands fa-linkedin-in"></i></div>
-          <div class="contact-info">
-            <div class="contact-label">LinkedIn</div>
-            <a class="contact-value" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noopener noreferrer">
-              ijaz-ahmad-18516a178
-            </a>
+          <div class="card contact-card">
+            <h3>Availability</h3>
+            <p class="muted" style="line-height:1.7;">
+              I can help with <strong>SQL reporting</strong>, <strong>Python analysis</strong>, and
+              <strong>Excel dashboards</strong>. If you share your dataset and goals, I can suggest the best approach.
+            </p>
+
+            <div class="mini-meta" style="margin-top:14px;">
+              <div class="mini">
+                <span class="mini-label">Role</span>
+                <span class="mini-value">Data Analyst</span>
+              </div>
+              <div class="mini">
+                <span class="mini-label">Tools</span>
+                <span class="mini-value">SQL • Python • Excel</span>
+              </div>
+            </div>
+
+            <div class="card" style="margin-top:14px;">
+              <h3 style="margin:0 0 8px;">Quick Message Template</h3>
+              <p class="muted" style="margin:0; line-height:1.7;">
+                “Hi Ijaz, we need a dashboard/report for <strong>___</strong>. Dataset is <strong>___</strong>.
+                Deadline is <strong>___</strong>. Can you help?”
+              </p>
+            </div>
           </div>
-          <a class="contact-action" href="https://www.linkedin.com/in/ijaz-ahmad-18516a178/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
-        </div>
-
-        <div class="contact-cta">
-          <a class="btn primary" href="mailto:ijazsoftengnr@gmail.com?subject=Portfolio%20Inquiry%20-%20Ijaz%20Ahmad">
-            <i class="fa-solid fa-paper-plane"></i>
-            Email Me
-          </a>
-          <a class="btn" href="#projects">
-            <i class="fa-solid fa-briefcase"></i>
-            View Projects
-          </a>
-      <a class="btn" href="assets/Ijaz_Ahmad_Data_Analyst.pdf" download>
-        <i class="fa-solid fa-file-pdf"></i>
-        Download CV
-      </a>
-
-         
-
         </div>
       </div>
-
-      <div class="card contact-card">
-        <h3>Availability</h3>
-        <p class="muted" style="line-height:1.7;">
-          I can help with <strong>SQL reporting</strong>, <strong>Python analysis</strong>, and
-          <strong>Excel dashboards</strong>. If you share your dataset and goals, I can suggest the best approach.
-        </p>
-
-        <div class="mini-meta" style="margin-top:14px;">
-          <div class="mini">
-            <span class="mini-label">Role</span>
-            <span class="mini-value">Data Analyst</span>
-          </div>
-          <div class="mini">
-            <span class="mini-label">Tools</span>
-            <span class="mini-value">SQL • Python • Excel</span>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:14px;">
-          <h3 style="margin:0 0 8px;">Quick Message Template</h3>
-          <p class="muted" style="margin:0; line-height:1.7;">
-            “Hi Ijaz, we need a dashboard/report for <strong>___</strong>. Dataset is <strong>___</strong>.
-            Deadline is <strong>___</strong>. Can you help?”
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -335,17 +372,18 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=4" defer></script>
-  <a
-  class="wa-float"
-  href="https://wa.me/923409392472"
-  target="_blank"
-  rel="noreferrer"
-  aria-label="Chat on WhatsApp"
-  title="Chat on WhatsApp"
->
-  <i class="fa-brands fa-whatsapp"></i>
-</a>
+  <script src="assets/js/main.js?v=5" defer></script>
 
+  <!-- Floating WhatsApp -->
+  <a
+    class="wa-float"
+    href="https://wa.me/923409392472"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat on WhatsApp"
+    title="Chat on WhatsApp"
+  >
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
 </body>
 </html>

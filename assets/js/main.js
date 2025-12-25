@@ -1,22 +1,16 @@
+// ===== Year =====
 const yearEl = document.getElementById("year");
-yearEl.textContent = new Date().getFullYear();
-// Header shadow on scroll
-const header = document.querySelector(".site-header");
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// ===== Header shadow on scroll =====
+const siteHeader = document.querySelector(".site-header");
 window.addEventListener("scroll", () => {
-  if (!header) return;
-  header.classList.toggle("scrolled", window.scrollY > 10);
-});
+  if (!siteHeader) return;
+  siteHeader.classList.toggle("scrolled", window.scrollY > 10);
+}, { passive: true });
 
-// ===== Scroll progress bar (auto-insert) =====
-(function addProgressBar(){
-  const wrap = document.createElement("div");
-  wrap.className = "progress-wrap";
-  wrap.innerHTML = `<div class="progress-bar" id="scrollProgress"></div>`;
-  document.body.prepend(wrap);
-})();
-
-const scrollProgress = () => {
+// ===== Scroll progress bar (uses existing HTML) =====
+function scrollProgress() {
   const el = document.getElementById("scrollProgress");
   if (!el) return;
 
@@ -26,18 +20,19 @@ const scrollProgress = () => {
   const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
 
   el.style.width = `${pct}%`;
-};
-
+}
 window.addEventListener("scroll", scrollProgress, { passive: true });
 window.addEventListener("load", scrollProgress);
 
-// Mobile nav toggle
+// ===== Mobile nav toggle =====
 const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
+
 navToggle?.addEventListener("click", () => {
   const open = navMenu.classList.toggle("open");
   navToggle.setAttribute("aria-expanded", open ? "true" : "false");
 });
+
 navMenu?.querySelectorAll("a").forEach(a => {
   a.addEventListener("click", () => {
     navMenu.classList.remove("open");
@@ -45,6 +40,7 @@ navMenu?.querySelectorAll("a").forEach(a => {
   });
 });
 
+// ===== Projects =====
 const projectsGrid = document.getElementById("projectsGrid");
 const projectSearch = document.getElementById("projectSearch");
 const projectFilter = document.getElementById("projectFilter");
@@ -54,7 +50,6 @@ let projects = [];
 function uniq(arr) {
   return [...new Set(arr)];
 }
-
 function safeText(s) {
   return String(s ?? "");
 }
@@ -62,33 +57,31 @@ function safeText(s) {
 function createProjectCard(p) {
   const card = document.createElement("article");
   card.className = "card project-card";
-  // Make whole card clickable
   card.style.cursor = "pointer";
+
   card.addEventListener("click", (ev) => {
-    // If user clicks a button link, don't open modal
     const isLink = ev.target.closest("a");
     if (isLink) return;
     openModal(p);
   });
 
- const media = document.createElement("div");
-media.className = "project-media";
-media.style.position = "relative";
-
+  const media = document.createElement("div");
+  media.className = "project-media";
+  media.style.position = "relative";
 
   const img = document.createElement("img");
   img.loading = "lazy";
   img.alt = safeText(p.imageAlt || p.title || "Project screenshot");
   img.src = p.image || "";
   media.appendChild(img);
- 
+
   if (p.featured) {
-  const ribbon = document.createElement("div");
-  ribbon.className = "ribbon";
-  ribbon.innerHTML = `<span>⭐ Featured</span>`;
-  media.appendChild(ribbon);
-  card.classList.add("featured");
-}
+    const ribbon = document.createElement("div");
+    ribbon.className = "ribbon";
+    ribbon.innerHTML = `<span>⭐ Featured</span>`;
+    media.appendChild(ribbon);
+    card.classList.add("featured");
+  }
 
   const body = document.createElement("div");
   body.className = "project-body";
@@ -100,14 +93,15 @@ media.style.position = "relative";
   const desc = document.createElement("p");
   desc.className = "project-desc";
   desc.textContent = safeText(p.description);
-    const metrics = document.createElement("div");
-metrics.className = "metrics";
-(p.metrics || []).slice(0, 4).forEach(m => {
-  const b = document.createElement("span");
-  b.className = "metric";
-  b.textContent = safeText(m);
-  metrics.appendChild(b);
-});
+
+  const metrics = document.createElement("div");
+  metrics.className = "metrics";
+  (p.metrics || []).slice(0, 4).forEach(m => {
+    const b = document.createElement("span");
+    b.className = "metric";
+    b.textContent = safeText(m);
+    metrics.appendChild(b);
+  });
 
   const tags = document.createElement("div");
   tags.className = "tags";
@@ -126,7 +120,7 @@ metrics.className = "metrics";
     a.className = "btn primary";
     a.href = p.githubUrl;
     a.target = "_blank";
-    a.rel = "noreferrer";
+    a.rel = "noopener noreferrer";
     a.textContent = "GitHub Repo";
     btnRow.appendChild(a);
   }
@@ -136,7 +130,7 @@ metrics.className = "metrics";
     a.className = "btn";
     a.href = p.excelUrl;
     a.target = "_blank";
-    a.rel = "noreferrer";
+    a.rel = "noopener noreferrer";
     a.textContent = "Excel Dashboard";
     btnRow.appendChild(a);
   }
@@ -146,17 +140,16 @@ metrics.className = "metrics";
     a.className = "btn";
     a.href = p.reportUrl;
     a.target = "_blank";
-    a.rel = "noreferrer";
+    a.rel = "noopener noreferrer";
     a.textContent = "Report";
     btnRow.appendChild(a);
   }
 
-body.appendChild(title);
-body.appendChild(desc);
-if ((p.metrics || []).length) body.appendChild(metrics);
-if ((p.tags || []).length) body.appendChild(tags);
-body.appendChild(btnRow);
-
+  body.appendChild(title);
+  body.appendChild(desc);
+  if ((p.metrics || []).length) body.appendChild(metrics);
+  if ((p.tags || []).length) body.appendChild(tags);
+  body.appendChild(btnRow);
 
   card.appendChild(media);
   card.appendChild(body);
@@ -165,7 +158,9 @@ body.appendChild(btnRow);
 }
 
 function render(list) {
+  if (!projectsGrid) return;
   projectsGrid.innerHTML = "";
+
   if (!list.length) {
     const empty = document.createElement("div");
     empty.className = "card";
@@ -173,14 +168,14 @@ function render(list) {
     projectsGrid.appendChild(empty);
     return;
   }
-  
-  list.forEach(p => projectsGrid.appendChild(createProjectCard(p)));
-  // reveal newly rendered project cards
-document.querySelectorAll(".project-card").forEach(el => {
-  el.classList.add("reveal");
-  requestAnimationFrame(() => el.classList.add("show"));
-});
 
+  list.forEach(p => projectsGrid.appendChild(createProjectCard(p)));
+
+  // reveal newly rendered project cards
+  document.querySelectorAll(".project-card").forEach(el => {
+    el.classList.add("reveal");
+    requestAnimationFrame(() => el.classList.add("show"));
+  });
 }
 
 function applyFilters() {
@@ -188,9 +183,9 @@ function applyFilters() {
   const f = projectFilter?.value || "all";
 
   const filtered = projects.filter(p => {
-    const haystack = [
-      p.title, p.description, ...(p.tags || []), p.category
-    ].join(" ").toLowerCase();
+    const haystack = [p.title, p.description, ...(p.tags || []), p.category]
+      .join(" ")
+      .toLowerCase();
 
     const matchText = !q || haystack.includes(q);
     const matchFilter = f === "all" || (p.category || "").toLowerCase() === f;
@@ -200,14 +195,15 @@ function applyFilters() {
   render(filtered);
 }
 
-async function init() {
+async function initProjects() {
+  if (!projectsGrid) return;
+
   try {
-    const res = await fetch("data/projects.json", { cache: "no-store" });
+    const res = await fetch("data/projects.json"); // stable for GitHub Pages
     projects = await res.json();
-    projects.sort((a,b) => (b.featured === true) - (a.featured === true));
 
+    projects.sort((a, b) => (b.featured === true) - (a.featured === true));
 
-    // Fill filter dropdown (categories)
     const categories = uniq(
       projects.map(p => (p.category || "").toLowerCase()).filter(Boolean)
     ).sort();
@@ -216,13 +212,14 @@ async function init() {
       const opt = document.createElement("option");
       opt.value = c;
       opt.textContent = c[0].toUpperCase() + c.slice(1);
-      projectFilter.appendChild(opt);
+      projectFilter?.appendChild(opt);
     });
 
     render(projects);
 
     projectSearch?.addEventListener("input", applyFilters);
     projectFilter?.addEventListener("change", applyFilters);
+
   } catch (e) {
     projectsGrid.innerHTML = `<div class="card">
       <h3>Could not load projects</h3>
@@ -230,9 +227,9 @@ async function init() {
     </div>`;
   }
 }
+initProjects();
 
-init();
-// Scroll reveal (IntersectionObserver)
+// ===== Scroll reveal (IntersectionObserver) =====
 function setupReveal() {
   const targets = document.querySelectorAll(".section .card, .section-head, .hero-copy, .hero-card");
   targets.forEach(el => el.classList.add("reveal"));
@@ -248,10 +245,8 @@ function setupReveal() {
 
   targets.forEach(el => obs.observe(el));
 }
+window.addEventListener("load", setupReveal);
 
-window.addEventListener("load", () => {
-  setupReveal();
-});
 // ===== Modal Logic =====
 const projectModal = document.getElementById("projectModal");
 const modalClose = document.getElementById("modalClose");
@@ -270,29 +265,35 @@ function openModal(p){
   projectModal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
 
-  modalImg.src = p.image || "";
-  modalImg.alt = p.imageAlt || p.title || "Project preview";
-  modalTitle.textContent = p.title || "";
-  modalDesc.textContent = p.description || "";
+  if (modalImg) {
+    modalImg.src = p.image || "";
+    modalImg.alt = p.imageAlt || p.title || "Project preview";
+  }
+  if (modalTitle) modalTitle.textContent = p.title || "";
+  if (modalDesc) modalDesc.textContent = p.description || "";
 
-  // Tags
-  modalTags.innerHTML = "";
-  (p.tags || []).forEach(t => {
-    const tag = document.createElement("span");
-    tag.className = "tag";
-    tag.textContent = t;
-    modalTags.appendChild(tag);
-  });
+  if (modalTags) {
+    modalTags.innerHTML = "";
+    (p.tags || []).forEach(t => {
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = t;
+      modalTags.appendChild(tag);
+    });
+  }
 
-  // Links (hide if empty)
-  if (p.githubUrl) { modalGithub.href = p.githubUrl; modalGithub.style.display = "inline-flex"; }
-  else { modalGithub.style.display = "none"; }
-
-  if (p.excelUrl) { modalExcel.href = p.excelUrl; modalExcel.style.display = "inline-flex"; }
-  else { modalExcel.style.display = "none"; }
-
-  if (p.reportUrl) { modalReport.href = p.reportUrl; modalReport.style.display = "inline-flex"; }
-  else { modalReport.style.display = "none"; }
+  if (modalGithub) {
+    if (p.githubUrl) { modalGithub.href = p.githubUrl; modalGithub.style.display = "inline-flex"; }
+    else { modalGithub.style.display = "none"; }
+  }
+  if (modalExcel) {
+    if (p.excelUrl) { modalExcel.href = p.excelUrl; modalExcel.style.display = "inline-flex"; }
+    else { modalExcel.style.display = "none"; }
+  }
+  if (modalReport) {
+    if (p.reportUrl) { modalReport.href = p.reportUrl; modalReport.style.display = "inline-flex"; }
+    else { modalReport.style.display = "none"; }
+  }
 }
 
 function closeModal(){
@@ -310,8 +311,8 @@ projectModal?.addEventListener("click", (e) => {
 window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeModal();
 });
+
 // ===== Active section highlight in navbar =====
-// ===== Active section highlight (scroll position based) =====
 function setupActiveNav(){
   const header = document.querySelector(".site-header");
   const links = Array.from(document.querySelectorAll('.nav-menu a[href^="#"]'));
@@ -334,9 +335,9 @@ function setupActiveNav(){
     const sections = getSections();
     if (!sections.length) return;
 
-    // If near bottom → last section active (Contact)
     const nearBottom =
       window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 6;
+
     if (nearBottom){
       setActive(sections[sections.length - 1].id);
       return;
@@ -347,12 +348,10 @@ function setupActiveNav(){
 
     for (const sec of sections){
       const r = sec.getBoundingClientRect();
-      // Section is considered active if marker line is inside its vertical range
       if (r.top <= markerY && r.bottom > markerY){
         current = sec;
         break;
       }
-      // Fallback: if we passed it, keep last seen
       if (r.top <= markerY) current = sec;
     }
 
@@ -363,7 +362,6 @@ function setupActiveNav(){
   window.addEventListener("resize", onScroll);
   window.addEventListener("load", onScroll);
 
-  // Instant highlight on click
   links.forEach(a => {
     a.addEventListener("click", () => {
       const id = a.getAttribute("href").replace("#", "");
@@ -371,12 +369,11 @@ function setupActiveNav(){
     });
   });
 
-  // initial state
   onScroll();
 }
-
 setupActiveNav();
-// Back to top fallback (works even if anchor is blocked)
+
+// ===== Back to top fallback =====
 document.querySelectorAll('a[href="#top"]').forEach(a => {
   a.addEventListener("click", (e) => {
     e.preventDefault();
