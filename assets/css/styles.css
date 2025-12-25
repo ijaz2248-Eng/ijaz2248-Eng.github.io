@@ -856,3 +856,21 @@ a, button, .btn, .card, .chip, .tag, .input, .select {
   display:block;
   margin-bottom:12px;
 }
+.project-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card .project-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card .btn-row {
+  margin-top: auto;
+}
+.project-media img {
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+}
