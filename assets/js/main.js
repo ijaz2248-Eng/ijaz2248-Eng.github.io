@@ -4,12 +4,16 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ===== Header shadow on scroll =====
 const siteHeader = document.querySelector(".site-header");
-window.addEventListener("scroll", () => {
-  if (!siteHeader) return;
-  siteHeader.classList.toggle("scrolled", window.scrollY > 10);
-}, { passive: true });
+window.addEventListener(
+  "scroll",
+  () => {
+    if (!siteHeader) return;
+    siteHeader.classList.toggle("scrolled", window.scrollY > 10);
+  },
+  { passive: true }
+);
 
-// ===== Scroll progress bar (uses existing HTML) =====
+// ===== Scroll progress bar =====
 function scrollProgress() {
   const el = document.getElementById("scrollProgress");
   if (!el) return;
@@ -33,7 +37,7 @@ navToggle?.addEventListener("click", () => {
   navToggle.setAttribute("aria-expanded", open ? "true" : "false");
 });
 
-navMenu?.querySelectorAll("a").forEach(a => {
+navMenu?.querySelectorAll("a").forEach((a) => {
   a.addEventListener("click", () => {
     navMenu.classList.remove("open");
     navToggle?.setAttribute("aria-expanded", "false");
@@ -73,6 +77,12 @@ function createProjectCard(p) {
   img.loading = "lazy";
   img.alt = safeText(p.imageAlt || p.title || "Project screenshot");
   img.src = p.image || "";
+
+  // fallback image if GitHub raw image fails
+  img.onerror = () => {
+    img.src = "assets/og-cover.png";
+  };
+
   media.appendChild(img);
 
   if (p.featured) {
@@ -96,7 +106,7 @@ function createProjectCard(p) {
 
   const metrics = document.createElement("div");
   metrics.className = "metrics";
-  (p.metrics || []).slice(0, 4).forEach(m => {
+  (p.metrics || []).slice(0, 4).forEach((m) => {
     const b = document.createElement("span");
     b.className = "metric";
     b.textContent = safeText(m);
@@ -105,7 +115,7 @@ function createProjectCard(p) {
 
   const tags = document.createElement("div");
   tags.className = "tags";
-  (p.tags || []).slice(0, 6).forEach(t => {
+  (p.tags || []).slice(0, 6).forEach((t) => {
     const tag = document.createElement("span");
     tag.className = "tag";
     tag.textContent = safeText(t);
@@ -169,10 +179,9 @@ function render(list) {
     return;
   }
 
-  list.forEach(p => projectsGrid.appendChild(createProjectCard(p)));
+  list.forEach((p) => projectsGrid.appendChild(createProjectCard(p)));
 
-  // reveal newly rendered project cards
-  document.querySelectorAll(".project-card").forEach(el => {
+  document.querySelectorAll(".project-card").forEach((el) => {
     el.classList.add("reveal");
     requestAnimationFrame(() => el.classList.add("show"));
   });
@@ -182,7 +191,7 @@ function applyFilters() {
   const q = (projectSearch?.value || "").trim().toLowerCase();
   const f = projectFilter?.value || "all";
 
-  const filtered = projects.filter(p => {
+  const filtered = projects.filter((p) => {
     const haystack = [p.title, p.description, ...(p.tags || []), p.category]
       .join(" ")
       .toLowerCase();
@@ -199,31 +208,48 @@ async function initProjects() {
   if (!projectsGrid) return;
 
   try {
-    const res = await fetch("data/projects.json"); // stable for GitHub Pages
-    projects = await res.json();
+    const url = `data/projects.json?v=${Date.now()}`; // avoid caching issues
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status} while loading ${url}`);
+    }
+
+    const text = await res.text();
+
+    try {
+      projects = JSON.parse(text);
+    } catch (jsonErr) {
+      console.error("Invalid JSON in data/projects.json:", jsonErr);
+      throw new Error("Invalid JSON in data/projects.json (check commas/brackets).");
+    }
 
     projects.sort((a, b) => (b.featured === true) - (a.featured === true));
 
     const categories = uniq(
-      projects.map(p => (p.category || "").toLowerCase()).filter(Boolean)
+      projects.map((p) => (p.category || "").toLowerCase()).filter(Boolean)
     ).sort();
 
-    categories.forEach(c => {
-      const opt = document.createElement("option");
-      opt.value = c;
-      opt.textContent = c[0].toUpperCase() + c.slice(1);
-      projectFilter?.appendChild(opt);
-    });
+    // reset filter options (keep "All")
+    if (projectFilter) {
+      projectFilter.querySelectorAll("option:not([value='all'])").forEach((o) => o.remove());
+      categories.forEach((c) => {
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c[0].toUpperCase() + c.slice(1);
+        projectFilter.appendChild(opt);
+      });
+    }
 
     render(projects);
 
     projectSearch?.addEventListener("input", applyFilters);
     projectFilter?.addEventListener("change", applyFilters);
-
   } catch (e) {
+    console.error(e);
     projectsGrid.innerHTML = `<div class="card">
       <h3>Could not load projects</h3>
-      <p class="muted">Check that <code>data/projects.json</code> exists and is valid JSON.</p>
+      <p class="muted">Fix <code>data/projects.json</code> and refresh. If it still fails, open DevTools → Console to see the exact error.</p>
     </div>`;
   }
 }
@@ -231,19 +257,24 @@ initProjects();
 
 // ===== Scroll reveal (IntersectionObserver) =====
 function setupReveal() {
-  const targets = document.querySelectorAll(".section .card, .section-head, .hero-copy, .hero-card");
-  targets.forEach(el => el.classList.add("reveal"));
+  const targets = document.querySelectorAll(
+    ".section .card, .section-head, .hero-copy, .hero-card"
+  );
+  targets.forEach((el) => el.classList.add("reveal"));
 
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add("show");
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("show");
+          obs.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
 
-  targets.forEach(el => obs.observe(el));
+  targets.forEach((el) => obs.observe(el));
 }
 window.addEventListener("load", setupReveal);
 
@@ -258,7 +289,7 @@ const modalGithub = document.getElementById("modalGithub");
 const modalExcel = document.getElementById("modalExcel");
 const modalReport = document.getElementById("modalReport");
 
-function openModal(p){
+function openModal(p) {
   if (!projectModal) return;
 
   projectModal.classList.add("open");
@@ -268,13 +299,14 @@ function openModal(p){
   if (modalImg) {
     modalImg.src = p.image || "";
     modalImg.alt = p.imageAlt || p.title || "Project preview";
+    modalImg.onerror = () => (modalImg.src = "assets/og-cover.png");
   }
   if (modalTitle) modalTitle.textContent = p.title || "";
   if (modalDesc) modalDesc.textContent = p.description || "";
 
   if (modalTags) {
     modalTags.innerHTML = "";
-    (p.tags || []).forEach(t => {
+    (p.tags || []).forEach((t) => {
       const tag = document.createElement("span");
       tag.className = "tag";
       tag.textContent = t;
@@ -283,20 +315,32 @@ function openModal(p){
   }
 
   if (modalGithub) {
-    if (p.githubUrl) { modalGithub.href = p.githubUrl; modalGithub.style.display = "inline-flex"; }
-    else { modalGithub.style.display = "none"; }
+    if (p.githubUrl) {
+      modalGithub.href = p.githubUrl;
+      modalGithub.style.display = "inline-flex";
+    } else {
+      modalGithub.style.display = "none";
+    }
   }
   if (modalExcel) {
-    if (p.excelUrl) { modalExcel.href = p.excelUrl; modalExcel.style.display = "inline-flex"; }
-    else { modalExcel.style.display = "none"; }
+    if (p.excelUrl) {
+      modalExcel.href = p.excelUrl;
+      modalExcel.style.display = "inline-flex";
+    } else {
+      modalExcel.style.display = "none";
+    }
   }
   if (modalReport) {
-    if (p.reportUrl) { modalReport.href = p.reportUrl; modalReport.style.display = "inline-flex"; }
-    else { modalReport.style.display = "none"; }
+    if (p.reportUrl) {
+      modalReport.href = p.reportUrl;
+      modalReport.style.display = "inline-flex";
+    } else {
+      modalReport.style.display = "none";
+    }
   }
 }
 
-function closeModal(){
+function closeModal() {
   if (!projectModal) return;
   projectModal.classList.remove("open");
   projectModal.setAttribute("aria-hidden", "true");
@@ -313,32 +357,32 @@ window.addEventListener("keydown", (e) => {
 });
 
 // ===== Active section highlight in navbar =====
-function setupActiveNav(){
+function setupActiveNav() {
   const header = document.querySelector(".site-header");
   const links = Array.from(document.querySelectorAll('.nav-menu a[href^="#"]'));
 
-  function getSections(){
-    return links
-      .map(a => document.querySelector(a.getAttribute("href")))
-      .filter(Boolean);
+  function getSections() {
+    return links.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
   }
 
-  function setActive(id){
-    links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${id}`));
+  function setActive(id) {
+    links.forEach((a) =>
+      a.classList.toggle("active", a.getAttribute("href") === `#${id}`)
+    );
   }
 
-  function headerOffset(){
+  function headerOffset() {
     return (header ? header.offsetHeight : 0) + 18;
   }
 
-  function onScroll(){
+  function onScroll() {
     const sections = getSections();
     if (!sections.length) return;
 
     const nearBottom =
       window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 6;
 
-    if (nearBottom){
+    if (nearBottom) {
       setActive(sections[sections.length - 1].id);
       return;
     }
@@ -346,9 +390,9 @@ function setupActiveNav(){
     const markerY = headerOffset();
     let current = sections[0];
 
-    for (const sec of sections){
+    for (const sec of sections) {
       const r = sec.getBoundingClientRect();
-      if (r.top <= markerY && r.bottom > markerY){
+      if (r.top <= markerY && r.bottom > markerY) {
         current = sec;
         break;
       }
@@ -362,7 +406,7 @@ function setupActiveNav(){
   window.addEventListener("resize", onScroll);
   window.addEventListener("load", onScroll);
 
-  links.forEach(a => {
+  links.forEach((a) => {
     a.addEventListener("click", () => {
       const id = a.getAttribute("href").replace("#", "");
       setActive(id);
@@ -374,7 +418,7 @@ function setupActiveNav(){
 setupActiveNav();
 
 // ===== Back to top fallback =====
-document.querySelectorAll('a[href="#top"]').forEach(a => {
+document.querySelectorAll('a[href="#top"]').forEach((a) => {
   a.addEventListener("click", (e) => {
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
