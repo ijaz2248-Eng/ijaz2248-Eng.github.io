@@ -76,9 +76,7 @@ function createProjectCard(p) {
   const img = document.createElement("img");
   img.loading = "lazy";
   img.alt = safeText(p.imageAlt || p.title || "Project screenshot");
-  img.src = p.image || "";
-
-  // fallback image if GitHub raw image fails
+  img.src = p.image || "assets/og-cover.png";
   img.onerror = () => {
     img.src = "assets/og-cover.png";
   };
@@ -207,8 +205,17 @@ function applyFilters() {
 async function initProjects() {
   if (!projectsGrid) return;
 
+  // Loading placeholder (better UX)
+  projectsGrid.innerHTML = `
+    <div class="card">
+      <h3>Loading projects…</h3>
+      <p class="muted">Fetching previews</p>
+    </div>
+  `;
+
   try {
-    const url = `data/projects.json?v=${Date.now()}`; // avoid caching issues
+    // Use stable version so browser can cache; bump v= when you update JSON
+    const url = "data/projects.json?v=9";
     const res = await fetch(url);
 
     if (!res.ok) {
@@ -232,7 +239,9 @@ async function initProjects() {
 
     // reset filter options (keep "All")
     if (projectFilter) {
-      projectFilter.querySelectorAll("option:not([value='all'])").forEach((o) => o.remove());
+      projectFilter
+        .querySelectorAll("option:not([value='all'])")
+        .forEach((o) => o.remove());
       categories.forEach((c) => {
         const opt = document.createElement("option");
         opt.value = c;
@@ -249,7 +258,7 @@ async function initProjects() {
     console.error(e);
     projectsGrid.innerHTML = `<div class="card">
       <h3>Could not load projects</h3>
-      <p class="muted">Fix <code>data/projects.json</code> and refresh. If it still fails, open DevTools → Console to see the exact error.</p>
+      <p class="muted">Check <code>data/projects.json</code> path and refresh.</p>
     </div>`;
   }
 }
@@ -297,7 +306,7 @@ function openModal(p) {
   document.body.style.overflow = "hidden";
 
   if (modalImg) {
-    modalImg.src = p.image || "";
+    modalImg.src = p.image || "assets/og-cover.png";
     modalImg.alt = p.imageAlt || p.title || "Project preview";
     modalImg.onerror = () => (modalImg.src = "assets/og-cover.png");
   }

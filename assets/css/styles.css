@@ -849,3 +849,10 @@ a, button, .btn, .card, .chip, .tag, .input, .select {
   .nav-menu.open{ display:flex; }
   .nav-menu a{ padding:10px 12px; }
 }
+.project-card img{
+  width:100%;
+  height:auto;
+  border-radius:12px;
+  display:block;
+  margin-bottom:12px;
+}
