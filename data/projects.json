@@ -1,5 +1,49 @@
 [
   {
+    "title": "Sales & Inventory Analytics System (SQL + Python + Excel) — Pharmacy",
+    "category": "analytics",
+    "featured": true,
+    "metrics": ["12 Months", "50K+ Sales Rows", "3 Branches", "3 Warehouses"],
+    "description": "End-to-end pharmacy analytics project: SQLite database, Python KPI exports (sales + inventory + profit), and an Excel dashboard with monthly trends, category share, top products, profit bridge, and daily heatmap.",
+    "tags": ["SQL", "Python", "Excel", "SQLite", "Inventory", "Profit", "Dashboard", "KPIs"],
+    "image": "assets/projects/sales-inventory/dashboard_overview.png",
+    "imageAlt": "Sales & Inventory Analytics Dashboard Overview (Excel)",
+    "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx",
+    "reportUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard#readme"
+  },
+  {
+    "title": "Sales & Inventory Dashboard — Monthly Trend (Preview)",
+    "category": "analytics",
+    "description": "Monthly Net Sales and Gross Profit trend across 12 months.",
+    "tags": ["Excel", "Trend", "Sales", "Profit"],
+    "image": "assets/projects/sales-inventory/monthly_sales_profit_trend.png",
+    "imageAlt": "Monthly sales and profit trend chart",
+    "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
+  },
+  {
+    "title": "Sales & Inventory Dashboard — Category Share (Preview)",
+    "category": "analytics",
+    "description": "Category-wise sales contribution by month (stacked chart).",
+    "tags": ["Excel", "Category", "Revenue Share"],
+    "image": "assets/projects/sales-inventory/category_sales_share.png",
+    "imageAlt": "Category share stacked chart",
+    "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
+  },
+  {
+    "title": "Sales & Inventory Dashboard — Top Products (Preview)",
+    "category": "analytics",
+    "description": "Top products ranked by Net Sales with supporting profitability metrics.",
+    "tags": ["Excel", "Products", "Ranking"],
+    "image": "assets/projects/sales-inventory/top_products_analysis.png",
+    "imageAlt": "Top products bar chart",
+    "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
+  },
+
+  {
     "title": "Olist E-Commerce Analytics (SQL + Python + Excel)",
     "category": "analytics",
     "featured": true,
