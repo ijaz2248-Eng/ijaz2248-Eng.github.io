@@ -9,7 +9,7 @@
     "image": "assets/projects/sales-inventory/dashboard_overview.png",
     "imageAlt": "Sales & Inventory Analytics Dashboard Overview (Excel)",
     "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
-    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx",
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/raw/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx",
     "reportUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard#readme"
   },
   {
@@ -20,7 +20,7 @@
     "image": "assets/projects/sales-inventory/monthly_sales_profit_trend.png",
     "imageAlt": "Monthly sales and profit trend chart",
     "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
-    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/raw/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
   },
   {
     "title": "Sales & Inventory Dashboard — Category Share (Preview)",
@@ -30,7 +30,7 @@
     "image": "assets/projects/sales-inventory/category_sales_share.png",
     "imageAlt": "Category share stacked chart",
     "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
-    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/raw/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
   },
   {
     "title": "Sales & Inventory Dashboard — Top Products (Preview)",
@@ -40,9 +40,8 @@
     "image": "assets/projects/sales-inventory/top_products_analysis.png",
     "imageAlt": "Top products bar chart",
     "githubUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard",
-    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/blob/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
+    "excelUrl": "https://github.com/ijaz2248-Eng/sales-inventory-sql-python-excel-dashboard/raw/main/dashboard/Engnr_Ijaz_Ahmad_Data_Analyst_Dashboard.xlsx"
   },
-
   {
     "title": "Olist E-Commerce Analytics (SQL + Python + Excel)",
     "category": "analytics",
