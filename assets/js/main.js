@@ -215,7 +215,7 @@ async function initProjects() {
 
   try {
     // Use stable version so browser can cache; bump v= when you update JSON
-    const url = "data/projects.json?v=10";
+    const url = "data/projects.json?v=11";
     const res = await fetch(url);
 
     if (!res.ok) {
